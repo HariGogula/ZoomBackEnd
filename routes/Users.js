@@ -130,10 +130,10 @@ loginRouter.post('/sendemail', (req, res) => {
     }
   });
    
-  console.log(req.body.obj)
+  
   var mailOptions = {
     from: 'sas427748@gmail.com',
-    to: req.body.obj,
+    to: req.body.email,
     subject: 'Joining Meeting link',
     text: 'http://localhost:3000'
 

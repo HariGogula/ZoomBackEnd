@@ -12,7 +12,7 @@ app.use(
     bodyParser.urlencoded({extended: false})
 )
 
-mongoose.connect('mongodb://10.34.190.242:127.0.0.1:27017/todos', { useNewUrlParser: true});
+mongoose.connect('mongodb://127.0.0.1:27017/todos', { useNewUrlParser: true});
 const connection = mongoose.connection;
 
 connection.once('open', function(){
