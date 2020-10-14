@@ -11,6 +11,9 @@ const auth = require('../middleware/auth')
  process.env.SECRET_KEY='secret'
 loginRouter.use(cors());
 
+var nodemailer = require('nodemailer');
+
+
 // loginRouter.post('/login', (req,res) => {
 //     console.log('********Login*************')
 //     User.findOne({mail: req.body.mail})
@@ -115,6 +118,71 @@ loginRouter.post('/register',authen,(req,res) => {
         res.send('error:' +err)
     })
 })
+
+
+
+loginRouter.post('/sendemail', (req, res) => {
+    var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'sas427748@gmail.com',
+      pass: 'new1@123456'
+    }
+  });
+   
+  
+  var mailOptions = {
+    from: 'sas427748@gmail.com',
+    to: req.body.email,
+    subject: 'Joining Meeting link',
+    text: 'http://localhost:3000'
+
+
+  };
+   
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+
+ /* loginRouter.post('/sendemail', (req, res) => {
+    var data = req.body;
+    var smtpTransport = nodemailer.createTransport({
+    service: 'Gmail',
+    port: 465,
+    auth: {
+    user: 'sas427748@gmail.com',
+    pass: 'new1@123456'
+    }
+    });
+
+    var mailOptions = {
+    from: data.email,
+    replyto: data.email,
+    to: 'sss970646@gmail.com',
+    subject: 'invite link',
+    html: 'http://localhost:3000'
+
+    };
+    smtpTransport.sendMail(mailOptions,
+    (error, response) => {
+    if (error) {
+    res.status(400).send(error)
+    } else {
+    res.send('Success')
+    }
+    smtpTransport.close();
+    });
+    })*/
+
+});
+
+
+
 module.exports = loginRouter
 
 
