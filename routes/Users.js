@@ -129,13 +129,14 @@ loginRouter.post('/sendemail', (req, res) => {
       pass: 'new1@123456'
     }
   });
-   
+   const href ='http://localhost:3000';
   
   var mailOptions = {
     from: 'sas427748@gmail.com',
     to: req.body.email,
-    subject: 'Joining Meeting link',
-    text: 'http://localhost:3000'
+    subject: req.body.topic,
+    text: `hi \n please find meeting details ${req.body.date} : ${req.body.time}\n ${href} `
+    
 
 
   };
