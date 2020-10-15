@@ -50,4 +50,4 @@ const users={};
     
 })
 
-server.listen(process.env.PORT || 8000, () => console.log(`Server has started.`));
+server.listen(process.env.PORT || 7000, () => console.log(`Server has started.`));
