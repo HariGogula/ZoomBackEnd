@@ -4,12 +4,13 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const bcryptjs = require('bcryptjs')
 const authen = require('../middleware/auth')
+const mongoose = require('mongoose');
 
 const loginRouter = express.Router();
 const User = require('../model/loginmodel')
 const auth = require('../middleware/auth')
- process.env.SECRET_KEY='secret'
-loginRouter.use(cors());
+const SECRET_KEY='secret'
+//loginRouter.use(cors());
 
 var nodemailer = require('nodemailer');
 
@@ -48,7 +49,7 @@ loginRouter.post('/login',(req,res) => {
                const token = jwt.sign({
                     mail:user.mail,
                     userId: user._id
-                },process.env.SECRET_KEY,
+                },SECRET_KEY,
                 {
                     expiresIn: '1h'
                 })
@@ -84,7 +85,7 @@ loginRouter.get('/',(req,res) => {
 
     });
 });
-loginRouter.post('/register',authen,(req,res) => {
+loginRouter.post('/register',(req,res) => {
     console.log('*********************')
     let newUser = {
         mail: req.body.mail,
@@ -136,9 +137,6 @@ loginRouter.post('/sendemail', (req, res) => {
     to: req.body.email,
     subject: req.body.topic,
     text: `hi \n please find meeting details ${req.body.date} : ${req.body.time}\n ${href} `
-    
-
-
   };
    
   transporter.sendMail(mailOptions, function(error, info){
