@@ -28,7 +28,7 @@ const users={};
           socket.emit('message', { user: 'admin', text: `${user.name}, welcome to Meeting ID ${user.room}.`});
           socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
       
-         // io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+          io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
       
           callback();
         });    
@@ -46,8 +46,14 @@ const users={};
 
     socket.on('disconnect',()=>{
         console.log("User has left!!!!");
+        const user = removeUser(socket.id);
+
+    if(user) {
+      io.to(user.room).emit('message', { user: 'sdmin', text: `${user.name} has left.` });
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
+    }
     })
     
 })
 
-server.listen(process.env.PORT || 8000, () => console.log(`Server has started.`));
+server.listen(process.env.PORT || 7000, () => console.log(`Server has started.`));
